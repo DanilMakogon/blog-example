@@ -1,0 +1,105 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+section, header, footer, nav {
+    padding: 0 15px;
+}
+
+nav#menu {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    background: #373737;
+    color: white;
+}
+
+nav#menu a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 0;
+}
+
+nav#pagination {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+nav#pagination button {
+    background: #f1f1f1;
+    border: 1px solid #dfdddd;
+    padding: 4px 0;
+    border-radius: 7px;
+    min-width: 25px;
+    cursor: pointer;
+    transition: 300ms ease;
+}
+nav#pagination button.active {
+    background: #8d8d8d;
+}
+
+nav#pagination button:hover {
+    background: #d1d0d0;
+    transition: 300ms ease;
+}
+
+nav#pagination button:active {
+    background: #d1d0d0;
+    transform: scale(0.93);
+    transition: 200ms ease;
+}
+
+section#posts {
+    min-height: calc(100vh - 145px);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.post {
+    background: #f1f1f1;
+    padding: 5px 20px;
+    border-radius: 7px;
+    border: 1px solid #dfdddd;
+}
+
+footer {
+    min-height: 50px;
+    background: #373737;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+footer p {
+    margin: 0;
+
+}
+
+@media (min-width: 576px) {
+    section, header, footer, nav {
+        padding: 0 calc(50vw - 270px);
+    }
+}
+
+@media (min-width: 768px) {
+    section, header, footer, nav {
+        padding: 0 calc(50vw - 360px);
+    }
+}
+
+@media (min-width: 992px) {
+    section, header, footer, nav {
+        padding: 0 calc(50vw - 480px);
+    }
+}
+
+@media (min-width: 1200px) {
+    section, header, footer, nav {
+        padding: 0 calc(50vw - 590px);
+    }
+}
