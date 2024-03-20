@@ -4,7 +4,7 @@ class Post {
     body
     userId
 
-    constructor(postData) {
+    constructor(postData = {id: 0, title: '', body: '', userId: 0}) {
         this.#bootstrapSelf(postData)
     }
 

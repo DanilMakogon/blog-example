@@ -1,26 +1,24 @@
+/* The callback is asynchronous to ensure that the code is executed strictly sequentially with the right expectations */
+
 document.addEventListener('DOMContentLoaded', async () => {
-    if (window.hasOwnProperty('render') === false) {
-        window.render = new Render()
-    }
+    /* Step 1 | Set body element as global window property to access it everywhere */
+    window.body = document.querySelector('body')
 
-    if (window.hasOwnProperty('apiService') === false) {
-        window.apiService = new ApiService()
-    }
+    /* Step 2 | Load posts and set to window property to access it everywhere */
+    window.apiService = new ApiService()
+    window.posts = await window.apiService.getPosts()
 
-    // Await posts
-    window.render.showLoader('posts')
+    /* Step 3 | Create post mock */
+    window.post = new Post()
 
-    // First render
-    const posts = await window.apiService.getPosts()
+    /* Step 4 | Create content renderer and pagination */
+    window.content = new Content('content')
+    window.pagination = new Pagination('pagination')
 
-    // Pagination logic
-    if (window.hasOwnProperty('pagination') === false) {
-        window.pagination = new Pagination('pagination', 5, (posts) => {
-            window.render.renderPosts(posts, 'posts')
-        })
-    }
-
-    window.pagination.loadPosts(posts)
-    window.pagination.render()
-    window.pagination.renderPagePosts()
+    /* Step 5 | Dispatch custom event to render first page of loaded posts */
+    const renderPostsEvent = new CustomEvent('renderPosts', {
+        bubbles: true,
+        detail: {from: 0, to: 5}
+    });
+    window.body.dispatchEvent(renderPostsEvent);
 })

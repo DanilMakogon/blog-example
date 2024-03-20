@@ -10,7 +10,7 @@ section, header, footer, nav {
 nav#menu {
     display: flex;
     flex-direction: row;
-    gap: 10px;
+    gap: 20px;
     background: #373737;
     color: white;
 }
@@ -36,6 +36,7 @@ nav#pagination button {
     cursor: pointer;
     transition: 300ms ease;
 }
+
 nav#pagination button.active {
     background: #8d8d8d;
 }
@@ -51,7 +52,11 @@ nav#pagination button:active {
     transition: 200ms ease;
 }
 
-section#posts {
+section#about {
+    min-height: calc(100vh - 145px);
+}
+
+section#content {
     min-height: calc(100vh - 145px);
     display: flex;
     flex-direction: column;
@@ -64,6 +69,21 @@ section#posts {
     padding: 5px 20px;
     border-radius: 7px;
     border: 1px solid #dfdddd;
+    cursor: pointer;
+}
+
+.post h2 {
+    text-transform: capitalize;
+}
+
+.post p {
+    color: #515151;
+}
+
+.post .post-footer {
+    display: flex;
+    justify-content: space-between;
+    font-family: monospace;
 }
 
 footer {

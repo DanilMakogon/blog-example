@@ -1,59 +1,57 @@
 class Pagination {
-    posts
     perPage
     currentPage = 1
     targetElement
-    onPageChangeCallback
 
-    constructor(targetElementId, perPage, onPageChangeCallback) {
+    constructor(targetElementId, perPage = 5) {
         this.targetElement = document.getElementById(targetElementId)
         this.perPage = perPage
-        this.onPageChangeCallback = onPageChangeCallback
+        this.#render()
     }
 
-    loadPosts(posts) {
-        this.posts = posts
-    }
-
-    render() {
+    #render() {
         this.targetElement.innerHTML = ''
-        const pagesCount = Math.ceil(this.posts.length / this.perPage)
+        const pagesCount = Math.ceil(window.posts.length / this.perPage)
         for (let i = 1; i <= pagesCount; i++) {
-            const button = this.createButton(i)
+            const button = this.#createButton(i)
             this.targetElement.appendChild(button)
         }
     }
 
-    createButton(pageNumber) {
+    #createButton(pageNumber) {
         const changePageButtonElement = document.createElement('button')
         changePageButtonElement.innerText = pageNumber
+        if (pageNumber === 1)
+            changePageButtonElement.classList.add('active')
         changePageButtonElement.addEventListener('click', (e) => {
             this.#clearActiveClasses()
-            const button = e.target
-            button.classList.add('active')
+            e.target.classList.add('active')
             this.currentPage = pageNumber
-            this.renderPagePosts(pageNumber);
+            this.#dispatchRenderPostsEvent()
         })
 
         return changePageButtonElement
     }
 
-    renderPagePosts() {
-        const posts = this.#getCurrentPagePosts()
-        this.onPageChangeCallback(posts)
-    }
-
-    #getCurrentPagePosts() {
-        const from =  this.perPage * this.currentPage - this.perPage
-        const to = this.perPage * this.currentPage
-        console.log(`from ${from} to ${to-1}`)
-        return this.posts.slice(from,to)
+    #dispatchRenderPostsEvent() {
+        const renderPosts = new CustomEvent('renderPosts', {
+            bubbles: true,
+            detail: {from: this.#getPostIdFrom(), to: this.#getPostIdTo()},
+        });
+        window.body.dispatchEvent(renderPosts)
     }
 
     #clearActiveClasses() {
-        for(const button of this.targetElement.childNodes) {
+        for (const button of this.targetElement.childNodes) {
             button.classList.remove('active')
         }
     }
 
+    #getPostIdFrom() {
+        return this.perPage * this.currentPage - this.perPage
+    }
+
+    #getPostIdTo() {
+        return this.perPage * this.currentPage
+    }
 }
